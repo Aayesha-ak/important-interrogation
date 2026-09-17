@@ -2,389 +2,392 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>Shlok's Official Interrogation 💕</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>A Very Important Interrogation for Shlok 💕</title>
 
-<!-- Playful Google Font. If offline, the fallback fonts below still look friendly. -->
+<!-- Playful Google Font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
 
 <style>
-  /* ============================================================
-     1) DESIGN TOKENS — change these to re-theme the whole page
-     ============================================================ */
-  :root{
-    --pink:        #ffd3e6;
-    --pink-deep:   #ff8fb8;
-    --lavender:    #e3d7ff;
-    --lavender-deep:#b79cff;
-    --peach:       #ffe4c7;
-    --mint:        #cdf3e6;
-    --cream:       #fffaf4;
-    --ink:         #4a3b52;
-    --ink-soft:    #7a6b85;
-    --shadow:      rgba(150, 95, 150, 0.28);
-
-    --font-display: 'Baloo 2', 'Comic Sans MS', 'Segoe UI Rounded', sans-serif;
-    --font-body:    'Quicksand', 'Segoe UI', sans-serif;
-  }
-
-  *{ box-sizing: border-box; }
-
-  html, body{
+  /* ---------------------------------------------------------
+     BASIC RESET
+     --------------------------------------------------------- */
+  * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
     width: 100%;
-    min-height: 100%;
-    overflow-x: hidden;           /* never allow horizontal scroll */
-    font-family: var(--font-body);
-    color: var(--ink);
+    height: 100%;
+    overflow-x: hidden;      /* never allow horizontal scroll */
+    overflow-y: auto;
   }
 
-  body{
+  body {
+    font-family: 'Baloo 2', cursive, sans-serif;
+    background: linear-gradient(135deg, #ffdde6 0%, #fff0f6 25%, #e0f7ff 60%, #fff5d7 100%);
     min-height: 100vh;
-    background: linear-gradient(135deg, var(--pink) 0%, var(--lavender) 50%, var(--peach) 100%);
-    background-size: 200% 200%;
-    animation: driftBg 18s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
+    color: #4a3b52;
   }
 
-  @keyframes driftBg{
-    0%   { background-position: 0% 0%; }
-    50%  { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
-  }
-
-  /* ============================================================
-     2) FLOATING BACKGROUND DECORATIONS (purely decorative)
-     ============================================================ */
-  .bg-decor{
+  /* ---------------------------------------------------------
+     FLOATING BACKGROUND DECORATIONS (hearts & stars)
+     --------------------------------------------------------- */
+  .decor {
     position: fixed;
-    inset: 0;
-    overflow: hidden;
-    z-index: 0;
-    pointer-events: none;
-  }
-  .bg-decor span{
-    position: absolute;
+    top: -50px;
+    font-size: 28px;
     opacity: 0.55;
-    font-size: 1.6rem;
-    animation: floatUp linear infinite;
-    will-change: transform;
-  }
-  @keyframes floatUp{
-    0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
-    10%  { opacity: 0.55; }
-    90%  { opacity: 0.55; }
-    100% { transform: translateY(-110vh) rotate(25deg); opacity: 0; }
-  }
-
-  /* ============================================================
-     3) LAYOUT
-     ============================================================ */
-  .app{
-    position: relative;
-    z-index: 1;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px 16px;
-  }
-
-  .screen{ width: 100%; display: flex; flex-direction: column; align-items: center; }
-  .hidden{ display: none !important; }
-
-  /* ---- Top bar: progress + reset ---- */
-  .top-bar{
-    width: 100%;
-    max-width: 440px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 14px;
-    padding: 0 6px;
-  }
-  .progress{
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--ink);
-    background: rgba(255,255,255,0.6);
-    padding: 6px 14px;
-    border-radius: 999px;
-    box-shadow: 0 2px 8px var(--shadow);
-  }
-  .reset-btn{
-    font-family: var(--font-body);
-    font-weight: 700;
-    font-size: 0.85rem;
-    border: none;
-    background: rgba(255,255,255,0.6);
-    color: var(--ink-soft);
-    padding: 8px 14px;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: transform 0.15s ease, background 0.2s ease;
-  }
-  .reset-btn:hover{ background: rgba(255,255,255,0.9); }
-  .reset-btn:active{ transform: scale(0.94); }
-
-  /* ---- Question card ---- */
-  .card{
-    width: 100%;
-    max-width: 440px;
-    background: var(--cream);
-    border-radius: 28px;
-    padding: 40px 28px 34px;
-    box-shadow: 0 14px 34px var(--shadow);
-    text-align: center;
-    position: relative;
-    animation: popIn 0.35s ease;
-  }
-  @keyframes popIn{
-    from{ transform: scale(0.9); opacity: 0; }
-    to  { transform: scale(1); opacity: 1; }
-  }
-
-  .question{
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.35rem;
-    line-height: 1.4;
-    margin: 0 0 30px;
-    min-height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* ---- Buttons ---- */
-  .buttons-row{
-    display: flex;
-    gap: 18px;
-    justify-content: center;
-    flex-wrap: nowrap;
-  }
-
-  .btn{
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.05rem;
-    padding: 14px 30px;
-    border: none;
-    border-radius: 999px;
-    cursor: pointer;
-    color: var(--cream);
-    box-shadow: 0 8px 18px var(--shadow);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
+    animation: floatDown linear infinite;
+    pointer-events: none;
+    z-index: 0;
     user-select: none;
   }
-  .btn:active{ transform: scale(0.94); }
-  .btn:focus-visible{ outline: 3px solid var(--lavender-deep); outline-offset: 3px; }
 
-  .yes-btn{ background: linear-gradient(135deg, var(--pink-deep), #ff6f9c); }
-  .yes-btn:hover{ transform: translateY(-2px); box-shadow: 0 12px 22px var(--shadow); }
-
-  .no-btn{
-    background: linear-gradient(135deg, var(--lavender-deep), #9a7bff);
-    position: relative; /* becomes 'fixed' via .escaped class once it first runs away */
+  @keyframes floatDown {
+    0%   { transform: translateY(-10vh) rotate(0deg); }
+    100% { transform: translateY(110vh) rotate(360deg); }
   }
-  .no-btn.escaped{
+
+  /* ---------------------------------------------------------
+     MAIN APP CONTAINER
+     --------------------------------------------------------- */
+  .app {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1;
+  }
+
+  /* Invisible full-viewport layer (kept for clarity; the escaped NO
+     button uses fixed positioning directly on the body). */
+  #arena {
     position: fixed;
     top: 0;
     left: 0;
-    transition: top 0.35s cubic-bezier(.34,1.56,.64,1), left 0.35s cubic-bezier(.34,1.56,.64,1);
-    z-index: 50;
-  }
-
-  /* ---- Toast message ---- */
-  .toast{
-    position: fixed;
-    left: 50%;
-    bottom: 34px;
-    transform: translate(-50%, 20px);
-    background: var(--ink);
-    color: var(--cream);
-    font-family: var(--font-body);
-    font-weight: 600;
-    font-size: 0.95rem;
-    padding: 12px 22px;
-    border-radius: 999px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    opacity: 0;
+    width: 100vw;
+    height: 100vh;
     pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    z-index: 60;
-    max-width: 90vw;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .toast.show{
-    opacity: 1;
-    transform: translate(-50%, 0);
+    z-index: 5;
   }
 
-  /* ---- Final screen ---- */
-  .final-screen{ position: relative; }
-  .final-card{
+  /* ---------------------------------------------------------
+     QUIZ CARD
+     --------------------------------------------------------- */
+  .card {
+    background: #ffffff;
+    border-radius: 32px;
+    padding: 36px 28px 44px;
     max-width: 460px;
     width: 100%;
-    background: var(--cream);
-    border-radius: 28px;
-    padding: 42px 30px;
+    box-shadow: 0 20px 50px rgba(255, 130, 170, 0.25);
     text-align: center;
-    box-shadow: 0 16px 40px var(--shadow);
     position: relative;
     z-index: 2;
-    animation: popIn 0.4s ease;
+    animation: popIn 0.45s ease;
   }
-  .final-card h1{
-    font-family: var(--font-display);
-    font-size: 1.7rem;
-    margin: 0 0 14px;
-    color: var(--ink);
+
+  @keyframes popIn {
+    0%   { transform: scale(0.85); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
   }
-  .final-card p{
-    font-size: 1rem;
-    line-height: 1.55;
-    margin: 8px 0;
-    color: var(--ink-soft);
+
+  .progress {
+    font-weight: 700;
+    font-size: 15px;
+    color: #ff6f9c;
+    background: #fff0f5;
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+    letter-spacing: 0.5px;
   }
-  .final-card p.highlight{
-    color: var(--ink);
+
+  .question-title {
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #b98bb0;
+    margin-bottom: 8px;
     font-weight: 700;
   }
-  .final-card hr{
+
+  #question-text {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 32px;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4a3b52;
+  }
+
+  /* ---------------------------------------------------------
+     ANSWER BUTTON ROW
+     --------------------------------------------------------- */
+  .answer-row {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 70px;
+  }
+
+  .btn {
+    font-family: 'Baloo 2', cursive, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
     border: none;
-    border-top: 2px dashed var(--lavender);
-    margin: 18px 0;
-  }
-  .replay-btn{
-    margin-top: 22px;
-    font-size: 1.15rem;
-    padding: 16px 42px;
-    background: linear-gradient(135deg, var(--pink-deep), var(--lavender-deep));
+    border-radius: 999px;
+    padding: 16px 30px;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 
-  /* ---- Confetti / floating hearts on final screen ---- */
-  .confetti-layer{
+  .btn:active {
+    transform: scale(0.94);
+  }
+
+  .btn-yes {
+    background: linear-gradient(135deg, #ff9fc0, #ff6f9c);
+    color: white;
+  }
+
+  .btn-yes:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 12px 22px rgba(255, 111, 156, 0.4);
+  }
+
+  /* The NO button: starts inline, then switches to fixed positioning
+     the moment it needs to escape. */
+  .btn-no {
+    background: linear-gradient(135deg, #d7f0ff, #aee1f7);
+    color: #2f6f8f;
+    position: relative;
+    z-index: 10;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, top 0.35s cubic-bezier(.34,1.56,.64,1), left 0.35s cubic-bezier(.34,1.56,.64,1);
+  }
+
+  .btn-no.escaped {
     position: fixed;
-    inset: 0;
-    overflow: hidden;
+    pointer-events: auto;
+  }
+
+  /* ---------------------------------------------------------
+     TEASING MESSAGE BUBBLE (shown when NO is chased)
+     --------------------------------------------------------- */
+  #chase-message {
+    margin-top: 22px;
+    min-height: 26px;
+    font-weight: 700;
+    color: #ff5c8a;
+    font-size: 15px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  #chase-message.show {
+    opacity: 1;
+  }
+
+  /* ---------------------------------------------------------
+     YES REACTION (brief pop-up text after clicking yes)
+     --------------------------------------------------------- */
+  #yes-reaction {
+    margin-top: 22px;
+    min-height: 26px;
+    font-weight: 700;
+    color: #6fbf73;
+    font-size: 15px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  #yes-reaction.show {
+    opacity: 1;
+  }
+
+  /* ---------------------------------------------------------
+     RESET BUTTON
+     --------------------------------------------------------- */
+  .reset-btn {
+    margin-top: 26px;
+    background: none;
+    border: 2px dashed #e2b6cf;
+    color: #b98bb0;
+    font-family: 'Baloo 2', cursive, sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  .reset-btn:hover {
+    background: #fff0f5;
+  }
+
+  /* ---------------------------------------------------------
+     FINAL SCREENS
+     --------------------------------------------------------- */
+  .final-card {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .final-card.show {
+    display: flex;
+  }
+
+  .final-card h2 {
+    font-size: 26px;
+    color: #ff6f9c;
+    margin-bottom: 4px;
+  }
+
+  .final-card p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #6a5568;
+  }
+
+  .big-btn {
+    margin-top: 12px;
+    font-family: 'Baloo 2', cursive, sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    border: none;
+    border-radius: 999px;
+    padding: 18px 40px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #ff9fc0, #ff6f9c);
+    color: white;
+    box-shadow: 0 10px 24px rgba(255, 111, 156, 0.4);
+    transition: transform 0.15s ease;
+  }
+
+  .big-btn:hover {
+    transform: translateY(-2px) scale(1.04);
+  }
+
+  /* Confetti / floating hearts burst on final congrats screen */
+  .confetti-piece {
+    position: fixed;
+    top: -20px;
+    font-size: 22px;
+    z-index: 50;
+    animation: confettiFall linear forwards;
     pointer-events: none;
-    z-index: 1;
-  }
-  .confetti-piece{
-    position: absolute;
-    top: -10%;
-    font-size: 1.4rem;
-    animation-name: confettiFall;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-  }
-  @keyframes confettiFall{
-    0%   { transform: translateY(0) rotate(0deg); }
-    100% { transform: translateY(115vh) rotate(360deg); }
   }
 
-  /* ============================================================
-     4) RESPONSIVE TWEAKS
-     ============================================================ */
-  @media (max-width: 480px){
-    .question{ font-size: 1.15rem; }
-    .btn{ font-size: 0.95rem; padding: 13px 22px; }
-    .card{ padding: 32px 20px 28px; }
-    .buttons-row{ gap: 12px; }
+  @keyframes confettiFall {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(105vh) rotate(400deg); opacity: 0.9; }
   }
 
-  /* Respect users who prefer less motion */
-  @media (prefers-reduced-motion: reduce){
-    body{ animation: none; }
-    .bg-decor span{ animation: none; opacity: 0.3; }
-    .card, .final-card{ animation: none; }
-    .confetti-piece{ animation: none; display: none; }
+  /* Hide sections by default, shown via JS toggling classes */
+  .hidden {
+    display: none !important;
+  }
+
+  /* Small screens: shrink card padding & font a touch */
+  @media (max-width: 400px) {
+    #question-text { font-size: 20px; }
+    .card { padding: 28px 18px 36px; }
+    .btn { font-size: 16px; padding: 14px 22px; }
   }
 </style>
 </head>
 <body>
 
-  <!-- Decorative floating hearts/stars, purely visual -->
-  <div class="bg-decor" id="bgDecor"></div>
+  <!-- Floating decorative background hearts/stars -->
+  <div id="decor-container"></div>
 
-  <main class="app">
+  <!-- Invisible full-viewport layer (visual reference for the NO button's roam area) -->
+  <div id="arena"></div>
 
-    <!-- ============== QUIZ SCREEN ============== -->
-    <section id="quizScreen" class="screen">
-      <div class="top-bar">
-        <span class="progress" id="progress">Question 1 / 10</span>
-        <button class="reset-btn" id="resetBtn" type="button">Reset 🔄</button>
-      </div>
+  <div class="app">
+    <div class="card" id="quiz-card">
 
-      <div class="card" id="card">
-        <p class="question" id="questionText"></p>
-        <div class="buttons-row" id="buttonsRow">
-          <button class="btn yes-btn" id="yesBtn" type="button">YES 💕</button>
-          <button class="btn no-btn" id="noBtn" type="button">NO 😌</button>
+      <!-- QUIZ SCREEN -->
+      <div id="quiz-screen">
+        <div class="progress" id="progress-text">Question 1 / 10</div>
+        <div class="question-title">Answer honestly, Shlok 👀</div>
+        <div id="question-text">Loading question...</div>
+
+        <div class="answer-row" id="answer-row">
+          <button class="btn btn-yes" id="yes-btn">YES 💕</button>
+          <button class="btn btn-no" id="no-btn">NO 😌</button>
         </div>
-      </div>
-    </section>
 
-    <!-- ============== FINAL SCREEN ============== -->
-    <section id="finalScreen" class="screen hidden">
-      <div class="confetti-layer" id="confettiLayer"></div>
-      <div class="final-card">
-        <h1>Congratulations, Shlok! 🎉</h1>
-        <p>You survived the most important interrogation of your life.</p>
-        <p class="highlight">Best-friend status: permanently renewed 💕</p>
-        <hr>
-        <p>Hmm… interesting answers, Shlok 👀</p>
+        <div id="chase-message"></div>
+        <div id="yes-reaction"></div>
+
+        <button class="reset-btn" id="reset-btn">Reset 🔄</button>
+      </div>
+
+      <!-- INTERIM "SASSY" FINAL SCREEN -->
+      <div class="final-card" id="final-screen-1">
+        <h2>Hmm… interesting answers, Shlok 👀</h2>
         <p>I'll pretend I didn't notice how many YESes you clicked.</p>
-        <p class="highlight">Anyway, you're stuck with me now. No returns accepted. 😌</p>
-        <button class="btn replay-btn" id="replayBtn" type="button">Replay 🔄</button>
+        <p>Anyway, you're stuck with me now. No returns accepted. 😌</p>
+        <button class="big-btn" id="next-final-btn">Next ➡️</button>
       </div>
-    </section>
 
-  </main>
+      <!-- FINAL CONGRATS SCREEN -->
+      <div class="final-card" id="final-screen-2">
+        <h2>Congratulations, Shlok! 🎉</h2>
+        <p>You survived the most important interrogation of your life.</p>
+        <p>Best-friend status: permanently renewed 💕</p>
+        <button class="big-btn" id="replay-btn">Replay 🔄</button>
+      </div>
 
-  <!-- Toast for NO-button reactions -->
-  <div class="toast" id="toast" aria-live="polite"></div>
+    </div>
+  </div>
 
 <script>
-/* ================================================================
-   ALL EDITABLE CONTENT LIVES IN THESE ARRAYS — tweak freely.
-   ================================================================ */
+/* =====================================================================
+   ALL EDITABLE CONTENT LIVES HERE — edit these arrays freely!
+   ===================================================================== */
 
-// The 10 quiz questions (mix of teasing + friendship + funny, on purpose)
-const questions = [
+// The quiz questions, shown one at a time.
+const QUESTIONS = [
   "Be honest… am I a little bit your favourite? 👀",
   "Would you miss me if I stopped annoying you for a week?",
   "Do you think I'm kinda cute? 🤨",
   "If I called you at 2 AM, would you answer?",
-  "Do you agree that I'm always right? 👀",
   "Would you save me the last piece of your favourite food?",
-  "Have you ever smiled because of one of my texts? 👀",
   "Are you secretly glad you became friends with me?",
   "Do you think we're suspiciously attached for 'just friends'? 👀",
+  "Do I occupy an unnecessary amount of space in your brain? 😌",
+  "Do you agree that I'm always right? 👀",
   "Okay Shlok… am I your favourite girl bestie? 💅"
 ];
 
-// Shown briefly whenever YES is clicked
-const yesReactions = [
-  "That's what I wanted to hear 😌💕",
-  "Good choice, Shlok.",
-  "I knew it 👀",
-  "Correct answer. Obviously.",
-  "Okayyy, points for you 💅",
-  "See? That wasn't so difficult."
-];
-
-// Cycled through every time NO is attempted (it never actually works)
-const noMessages = [
+// Funny messages shown when Shlok tries (and fails) to click NO.
+// These cycle through in order, then loop back to the start.
+const NO_MESSAGES = [
   "Excuse me?? 😭",
   "Wrong answer, Shlok 👀",
   "Nice try.",
@@ -397,219 +400,356 @@ const noMessages = [
   "At this point, just click YES."
 ];
 
-/* ================================================================
-   STATE
-   ================================================================ */
-let currentQuestion = 0;   // index into `questions`
-let noMessageIndex = 0;    // cycles through `noMessages`
+// Short reactions shown when Shlok clicks YES.
+const YES_MESSAGES = [
+  "That's what I wanted to hear 😌💕",
+  "Good choice, Shlok.",
+  "I knew it 👀",
+  "Correct answer. Obviously.",
+  "Okayyy, points for you 💅",
+  "See? That wasn't so difficult."
+];
 
-/* ================================================================
+/* =====================================================================
+   STATE VARIABLES
+   ===================================================================== */
+
+let currentQuestionIndex = 0;   // which question we're on (0-based)
+let noMessageCounter = 0;       // cycles through NO_MESSAGES
+let noEscapeCount = 0;          // how many times NO has fled
+let chaseMessageTimer = null;   // handles hiding the chase message after a delay
+let yesMessageTimer = null;     // handles hiding the yes reaction after a delay
+
+/* =====================================================================
    ELEMENT REFERENCES
-   ================================================================ */
-const quizScreen   = document.getElementById('quizScreen');
-const finalScreen   = document.getElementById('finalScreen');
-const progressEl    = document.getElementById('progress');
-const questionText  = document.getElementById('questionText');
-const yesBtn        = document.getElementById('yesBtn');
-const noBtn         = document.getElementById('noBtn');
-const resetBtn       = document.getElementById('resetBtn');
-const replayBtn      = document.getElementById('replayBtn');
-const toast          = document.getElementById('toast');
-const confettiLayer  = document.getElementById('confettiLayer');
-const bgDecor        = document.getElementById('bgDecor');
+   ===================================================================== */
 
-let toastTimer = null;
+const questionTextEl = document.getElementById('question-text');
+const progressTextEl = document.getElementById('progress-text');
+const yesBtn          = document.getElementById('yes-btn');
+const noBtn            = document.getElementById('no-btn');
+const chaseMessageEl   = document.getElementById('chase-message');
+const yesReactionEl    = document.getElementById('yes-reaction');
+const resetBtn         = document.getElementById('reset-btn');
 
-/* ================================================================
-   RENDER THE CURRENT QUESTION
-   ================================================================ */
-function renderQuestion(){
-  questionText.textContent = questions[currentQuestion];
-  progressEl.textContent = `Question ${currentQuestion + 1} / ${questions.length}`;
+const quizScreen   = document.getElementById('quiz-screen');
+const finalScreen1 = document.getElementById('final-screen-1');
+const finalScreen2 = document.getElementById('final-screen-2');
 
-  // Put the NO button back in its normal spot next to YES
+const nextFinalBtn = document.getElementById('next-final-btn');
+const replayBtn    = document.getElementById('replay-btn');
+
+const decorContainer = document.getElementById('decor-container');
+
+/* =====================================================================
+   RENDERING THE CURRENT QUESTION
+   ===================================================================== */
+
+function renderQuestion() {
+  questionTextEl.textContent = QUESTIONS[currentQuestionIndex];
+  progressTextEl.textContent = "Question " + (currentQuestionIndex + 1) + " / " + QUESTIONS.length;
+
+  // Make sure the NO button is back in its normal inline position
+  resetNoButtonPosition();
+
+  // Clear any leftover messages
+  hideChaseMessage();
+  hideYesReaction();
+}
+
+/* =====================================================================
+   NO BUTTON — THE CHAOTIC ESCAPE LOGIC
+   ===================================================================== */
+
+// Puts the NO button back to its normal spot inside the answer row.
+function resetNoButtonPosition() {
   noBtn.classList.remove('escaped');
   noBtn.style.top = '';
   noBtn.style.left = '';
 }
 
-/* ================================================================
-   TOAST HELPER — shows a short message, then fades out
-   ================================================================ */
-function showToast(message){
-  toast.textContent = message;
-  toast.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => {
-    toast.classList.remove('show');
-  }, 1400);
-}
+// Calculates a random-but-safe position for the NO button that:
+// - stays fully inside the viewport
+// - does not overlap the YES button
+// - never causes scrolling
+function getSafeRandomPosition() {
+  const btnWidth = noBtn.offsetWidth || 110;
+  const btnHeight = noBtn.offsetHeight || 54;
 
-/* ================================================================
-   THE CHAOTIC NO BUTTON
-   Moves to a random safe position inside the viewport, every time
-   the user tries to press it. Works for mouse AND touch because we
-   listen on 'pointerdown', which fires for both input types.
-   ================================================================ */
-function escapeNoButton(){
-  // Make sure it's measured in its escaped (fixed) state
-  noBtn.classList.add('escaped');
+  // Small margin so the button never touches the very edge of the screen.
+  const margin = 12;
 
-  const margin = 12; // keep some breathing room from the screen edge
-  const btnWidth  = noBtn.offsetWidth  || 110;
-  const btnHeight = noBtn.offsetHeight || 50;
+  const maxX = Math.max(window.innerWidth - btnWidth - margin, margin);
+  const maxY = Math.max(window.innerHeight - btnHeight - margin, margin);
 
-  const maxX = Math.max(margin, window.innerWidth  - btnWidth  - margin);
-  const maxY = Math.max(margin, window.innerHeight - btnHeight - margin);
-
+  // Get YES button's bounding box so we can avoid overlapping it.
   const yesRect = yesBtn.getBoundingClientRect();
+  const yesSafeZone = {
+    left: yesRect.left - 20,
+    right: yesRect.right + 20,
+    top: yesRect.top - 20,
+    bottom: yesRect.bottom + 20
+  };
 
-  let chosenX = margin;
-  let chosenY = margin;
+  let x, y;
+  let attempts = 0;
+  const maxAttempts = 20;
 
-  // Try a handful of random spots, skip any that overlap the YES button
-  for (let attempt = 0; attempt < 12; attempt++){
-    const x = margin + Math.random() * (maxX - margin);
-    const y = margin + Math.random() * (maxY - margin);
+  do {
+    x = margin + Math.random() * (maxX - margin);
+    y = margin + Math.random() * (maxY - margin);
+    attempts++;
 
     const overlapsYes =
-      x < yesRect.right  + 24 &&
-      x + btnWidth  > yesRect.left  - 24 &&
-      y < yesRect.bottom + 24 &&
-      y + btnHeight > yesRect.top   - 24;
+      x < yesSafeZone.right &&
+      x + btnWidth > yesSafeZone.left &&
+      y < yesSafeZone.bottom &&
+      y + btnHeight > yesSafeZone.top;
 
-    if (!overlapsYes){
-      chosenX = x;
-      chosenY = y;
-      break;
-    }
-    // last attempt: just accept whatever we've got, clamped to screen
-    chosenX = x;
-    chosenY = y;
-  }
+    if (!overlapsYes) break;
+  } while (attempts < maxAttempts);
 
-  noBtn.style.left = `${chosenX}px`;
-  noBtn.style.top  = `${chosenY}px`;
+  return { x: Math.max(margin, x), y: Math.max(margin, y) };
 }
 
-function handleNoAttempt(e){
-  e.preventDefault();
-  escapeNoButton();
-  showToast(noMessages[noMessageIndex]);
-  noMessageIndex = (noMessageIndex + 1) % noMessages.length;
+// Moves the NO button to a new random safe spot.
+function escapeNoButton() {
+  noEscapeCount++;
+
+  // Switch to fixed positioning so it can roam the whole screen
+  // (not just inside the card).
+  noBtn.classList.add('escaped');
+
+  const pos = getSafeRandomPosition();
+  noBtn.style.left = pos.x + 'px';
+  noBtn.style.top = pos.y + 'px';
+
+  showChaseMessage();
 }
 
-// Fires for mouse click AND touch tap
-noBtn.addEventListener('pointerdown', handleNoAttempt);
-// Extra chaos on desktop: it also dodges a hovering mouse before you even press
-noBtn.addEventListener('mouseenter', (e) => {
-  if (e.pointerType === 'touch') return;
-  escapeNoButton();
-});
-// Keyboard users tabbing to the button and pressing Enter/Space also get dodged
-noBtn.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' || e.key === ' '){
-    handleNoAttempt(e);
-  }
-});
-// If the window resizes (e.g. phone rotation) while escaped, keep it on-screen
-window.addEventListener('resize', () => {
-  if (noBtn.classList.contains('escaped')){
-    escapeNoButton();
-  }
-});
+// Displays the next teasing "you tried to click NO" message.
+function showChaseMessage() {
+  const message = NO_MESSAGES[noMessageCounter % NO_MESSAGES.length];
+  noMessageCounter++;
 
-/* ================================================================
-   YES BUTTON
-   ================================================================ */
-yesBtn.addEventListener('click', () => {
-  const reaction = yesReactions[Math.floor(Math.random() * yesReactions.length)];
-  showToast(reaction);
+  chaseMessageEl.textContent = message;
+  chaseMessageEl.classList.add('show');
 
-  currentQuestion++;
+  // Hide any yes-reaction that might still be showing
+  hideYesReaction();
 
-  if (currentQuestion >= questions.length){
-    showFinalScreen();
+  clearTimeout(chaseMessageTimer);
+  chaseMessageTimer = setTimeout(hideChaseMessage, 1800);
+}
+
+function hideChaseMessage() {
+  chaseMessageEl.classList.remove('show');
+}
+
+/* =====================================================================
+   YES BUTTON LOGIC
+   ===================================================================== */
+
+function handleYesClick() {
+  // Show a short random reaction
+  const message = YES_MESSAGES[Math.floor(Math.random() * YES_MESSAGES.length)];
+  yesReactionEl.textContent = message;
+  yesReactionEl.classList.add('show');
+  hideChaseMessage();
+
+  clearTimeout(yesMessageTimer);
+
+  // Wait a beat so Shlok can read the reaction, then move on.
+  yesMessageTimer = setTimeout(() => {
+    hideYesReaction();
+    goToNextQuestion();
+  }, 700);
+}
+
+function hideYesReaction() {
+  yesReactionEl.classList.remove('show');
+}
+
+function goToNextQuestion() {
+  currentQuestionIndex++;
+
+  if (currentQuestionIndex >= QUESTIONS.length) {
+    showFinalScreen1();
   } else {
     renderQuestion();
   }
-});
-
-/* ================================================================
-   RESET BUTTON — asks for confirmation, no page reload
-   ================================================================ */
-resetBtn.addEventListener('click', () => {
-  const confirmed = window.confirm("Already giving up? 😭 Start over?");
-  if (confirmed){
-    currentQuestion = 0;
-    noMessageIndex = 0;
-    toast.classList.remove('show');
-    renderQuestion();
-  }
-  // If cancelled, do nothing — stay on the current question
-});
-
-/* ================================================================
-   FINAL SCREEN
-   ================================================================ */
-function showFinalScreen(){
-  quizScreen.classList.add('hidden');
-  finalScreen.classList.remove('hidden');
-  toast.classList.remove('show');
-  spawnConfetti();
 }
 
-replayBtn.addEventListener('click', () => {
-  confettiLayer.innerHTML = ''; // clear old confetti
-  currentQuestion = 0;
-  noMessageIndex = 0;
-  finalScreen.classList.add('hidden');
-  quizScreen.classList.remove('hidden');
-  renderQuestion();
-});
+/* =====================================================================
+   RESET BUTTON LOGIC
+   ===================================================================== */
 
-/* ================================================================
-   CONFETTI — a light sprinkle of hearts & stars for the final screen
-   ================================================================ */
-function spawnConfetti(){
-  const symbols = ['💕', '✨', '🎉', '⭐', '💖'];
+function handleResetClick() {
+  const confirmed = window.confirm("Already giving up? 😭 Start over?");
+  if (confirmed) {
+    fullReset();
+  }
+  // If cancelled, do nothing — stay on current question.
+}
+
+function fullReset() {
+  currentQuestionIndex = 0;
+  noMessageCounter = 0;
+  noEscapeCount = 0;
+
+  clearTimeout(chaseMessageTimer);
+  clearTimeout(yesMessageTimer);
+
+  hideChaseMessage();
+  hideYesReaction();
+  resetNoButtonPosition();
+
+  showQuizScreen();
+  renderQuestion();
+}
+
+/* =====================================================================
+   SCREEN SWITCHING
+   ===================================================================== */
+
+function showQuizScreen() {
+  quizScreen.classList.remove('hidden');
+  finalScreen1.classList.remove('show');
+  finalScreen2.classList.remove('show');
+}
+
+function showFinalScreen1() {
+  quizScreen.classList.add('hidden');
+  finalScreen1.classList.add('show');
+  finalScreen2.classList.remove('show');
+}
+
+function showFinalScreen2() {
+  finalScreen1.classList.remove('show');
+  finalScreen2.classList.add('show');
+  launchConfetti();
+}
+
+/* =====================================================================
+   CONFETTI / FLOATING HEARTS BURST (final congrats screen)
+   ===================================================================== */
+
+const CONFETTI_EMOJIS = ['💕', '🎉', '⭐', '✨', '💖', '🎊'];
+
+function launchConfetti() {
   const pieceCount = 26;
 
-  for (let i = 0; i < pieceCount; i++){
-    const piece = document.createElement('span');
+  for (let i = 0; i < pieceCount; i++) {
+    const piece = document.createElement('div');
     piece.className = 'confetti-piece';
-    piece.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-    piece.style.left = `${Math.random() * 100}vw`;
-    piece.style.animationDuration = `${4 + Math.random() * 3}s`;
-    piece.style.animationDelay = `${Math.random() * 4}s`;
-    piece.style.fontSize = `${1 + Math.random() * 1.2}rem`;
-    confettiLayer.appendChild(piece);
+    piece.textContent = CONFETTI_EMOJIS[Math.floor(Math.random() * CONFETTI_EMOJIS.length)];
+
+    const startX = Math.random() * window.innerWidth;
+    const duration = 2.5 + Math.random() * 2; // 2.5s - 4.5s
+    const delay = Math.random() * 0.6;
+
+    piece.style.left = startX + 'px';
+    piece.style.fontSize = (16 + Math.random() * 16) + 'px';
+    piece.style.animationDuration = duration + 's';
+    piece.style.animationDelay = delay + 's';
+
+    document.body.appendChild(piece);
+
+    // Clean up after the animation finishes so the DOM doesn't grow forever.
+    setTimeout(() => {
+      piece.remove();
+    }, (duration + delay) * 1000 + 200);
   }
 }
 
-/* ================================================================
-   BACKGROUND DECORATION — a few gentle floating hearts/stars
-   ================================================================ */
-function spawnBackgroundDecor(){
-  const symbols = ['💗', '⭐', '✨', '🩷'];
+/* =====================================================================
+   BACKGROUND FLOATING DECORATIONS (gentle hearts/stars falling)
+   ===================================================================== */
+
+const BG_EMOJIS = ['💕', '⭐', '✨', '🩷', '💫'];
+
+function createBackgroundDecor() {
   const count = 14;
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('div');
+    el.className = 'decor';
+    el.textContent = BG_EMOJIS[Math.floor(Math.random() * BG_EMOJIS.length)];
 
-  for (let i = 0; i < count; i++){
-    const el = document.createElement('span');
-    el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-    el.style.left = `${Math.random() * 100}vw`;
-    el.style.fontSize = `${1 + Math.random() * 1.4}rem`;
-    el.style.animationDuration = `${10 + Math.random() * 10}s`;
-    el.style.animationDelay = `${Math.random() * 10}s`;
-    bgDecor.appendChild(el);
+    const leftPercent = Math.random() * 100;
+    const duration = 10 + Math.random() * 14; // 10s - 24s
+    const delay = Math.random() * 12;
+    const size = 16 + Math.random() * 20;
+
+    el.style.left = leftPercent + 'vw';
+    el.style.fontSize = size + 'px';
+    el.style.animationDuration = duration + 's';
+    el.style.animationDelay = '-' + delay + 's';
+
+    decorContainer.appendChild(el);
   }
 }
 
-/* ================================================================
-   INIT
-   ================================================================ */
-spawnBackgroundDecor();
-renderQuestion();
+/* =====================================================================
+   EVENT LISTENERS
+   ===================================================================== */
+
+// NO button: escape on mouse click AND on touch, and use pointerdown too
+// for maximum reliability across devices. We call escapeNoButton() as
+// early as possible (on press-down) so it flees before a "click" can
+// register on it.
+function attachNoButtonEvents() {
+  // Pointer events cover mouse + touch + pen in modern browsers.
+  noBtn.addEventListener('pointerdown', function (e) {
+    e.preventDefault();
+    escapeNoButton();
+  });
+
+  // Fallback for older browsers / edge cases: also handle touchstart & mousedown.
+  noBtn.addEventListener('touchstart', function (e) {
+    e.preventDefault();
+    escapeNoButton();
+  }, { passive: false });
+
+  noBtn.addEventListener('mousedown', function (e) {
+    e.preventDefault();
+    escapeNoButton();
+  });
+
+  // Just in case a click still slips through somehow, make sure it NEVER
+  // counts as a real answer — just escape again.
+  noBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    escapeNoButton();
+  });
+}
+
+yesBtn.addEventListener('click', handleYesClick);
+resetBtn.addEventListener('click', handleResetClick);
+nextFinalBtn.addEventListener('click', showFinalScreen2);
+replayBtn.addEventListener('click', fullReset);
+
+// Keep the NO button safely inside the viewport if the window is resized
+// (e.g. rotating a tablet/phone) while it's in its "escaped" state.
+window.addEventListener('resize', function () {
+  if (noBtn.classList.contains('escaped')) {
+    const pos = getSafeRandomPosition();
+    noBtn.style.left = pos.x + 'px';
+    noBtn.style.top = pos.y + 'px';
+  }
+});
+
+/* =====================================================================
+   INITIALIZE THE APP
+   ===================================================================== */
+
+function init() {
+  attachNoButtonEvents();
+  createBackgroundDecor();
+  showQuizScreen();
+  renderQuestion();
+}
+
+init();
 </script>
 </body>
 </html>
