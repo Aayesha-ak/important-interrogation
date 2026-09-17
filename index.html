@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Shlok's Official Interrogation 💕</title>
+
+<!-- Playful Google Font. If offline, the fallback fonts below still look friendly. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================================
+     1) DESIGN TOKENS — change these to re-theme the whole page
+     ============================================================ */
+  :root{
+    --pink:        #ffd3e6;
+    --pink-deep:   #ff8fb8;
+    --lavender:    #e3d7ff;
+    --lavender-deep:#b79cff;
+    --peach:       #ffe4c7;
+    --mint:        #cdf3e6;
+    --cream:       #fffaf4;
+    --ink:         #4a3b52;
+    --ink-soft:    #7a6b85;
+    --shadow:      rgba(150, 95, 150, 0.28);
+
+    --font-display: 'Baloo 2', 'Comic Sans MS', 'Segoe UI Rounded', sans-serif;
+    --font-body:    'Quicksand', 'Segoe UI', sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;           /* never allow horizontal scroll */
+    font-family: var(--font-body);
+    color: var(--ink);
+  }
+
+  body{
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--pink) 0%, var(--lavender) 50%, var(--peach) 100%);
+    background-size: 200% 200%;
+    animation: driftBg 18s ease-in-out infinite;
+    position: relative;
+  }
+
+  @keyframes driftBg{
+    0%   { background-position: 0% 0%; }
+    50%  { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+  }
+
+  /* ============================================================
+     2) FLOATING BACKGROUND DECORATIONS (purely decorative)
+     ============================================================ */
+  .bg-decor{
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .bg-decor span{
+    position: absolute;
+    opacity: 0.55;
+    font-size: 1.6rem;
+    animation: floatUp linear infinite;
+    will-change: transform;
+  }
+  @keyframes floatUp{
+    0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.55; }
+    90%  { opacity: 0.55; }
+    100% { transform: translateY(-110vh) rotate(25deg); opacity: 0; }
+  }
+
+  /* ============================================================
+     3) LAYOUT
+     ============================================================ */
+  .app{
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+  }
+
+  .screen{ width: 100%; display: flex; flex-direction: column; align-items: center; }
+  .hidden{ display: none !important; }
+
+  /* ---- Top bar: progress + reset ---- */
+  .top-bar{
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding: 0 6px;
+  }
+  .progress{
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ink);
+    background: rgba(255,255,255,0.6);
+    padding: 6px 14px;
+    border-radius: 999px;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+  .reset-btn{
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.85rem;
+    border: none;
+    background: rgba(255,255,255,0.6);
+    color: var(--ink-soft);
+    padding: 8px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.2s ease;
+  }
+  .reset-btn:hover{ background: rgba(255,255,255,0.9); }
+  .reset-btn:active{ transform: scale(0.94); }
+
+  /* ---- Question card ---- */
+  .card{
+    width: 100%;
+    max-width: 440px;
+    background: var(--cream);
+    border-radius: 28px;
+    padding: 40px 28px 34px;
+    box-shadow: 0 14px 34px var(--shadow);
+    text-align: center;
+    position: relative;
+    animation: popIn 0.35s ease;
+  }
+  @keyframes popIn{
+    from{ transform: scale(0.9); opacity: 0; }
+    to  { transform: scale(1); opacity: 1; }
+  }
+
+  .question{
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.35rem;
+    line-height: 1.4;
+    margin: 0 0 30px;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ---- Buttons ---- */
+  .buttons-row{
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+
+  .btn{
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    color: var(--cream);
+    box-shadow: 0 8px 18px var(--shadow);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  .btn:active{ transform: scale(0.94); }
+  .btn:focus-visible{ outline: 3px solid var(--lavender-deep); outline-offset: 3px; }
+
+  .yes-btn{ background: linear-gradient(135deg, var(--pink-deep), #ff6f9c); }
+  .yes-btn:hover{ transform: translateY(-2px); box-shadow: 0 12px 22px var(--shadow); }
+
+  .no-btn{
+    background: linear-gradient(135deg, var(--lavender-deep), #9a7bff);
+    position: relative; /* becomes 'fixed' via .escaped class once it first runs away */
+  }
+  .no-btn.escaped{
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: top 0.35s cubic-bezier(.34,1.56,.64,1), left 0.35s cubic-bezier(.34,1.56,.64,1);
+    z-index: 50;
+  }
+
+  /* ---- Toast message ---- */
+  .toast{
+    position: fixed;
+    left: 50%;
+    bottom: 34px;
+    transform: translate(-50%, 20px);
+    background: var(--ink);
+    color: var(--cream);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 12px 22px;
+    border-radius: 999px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 60;
+    max-width: 90vw;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .toast.show{
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  /* ---- Final screen ---- */
+  .final-screen{ position: relative; }
+  .final-card{
+    max-width: 460px;
+    width: 100%;
+    background: var(--cream);
+    border-radius: 28px;
+    padding: 42px 30px;
+    text-align: center;
+    box-shadow: 0 16px 40px var(--shadow);
+    position: relative;
+    z-index: 2;
+    animation: popIn 0.4s ease;
+  }
+  .final-card h1{
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    margin: 0 0 14px;
+    color: var(--ink);
+  }
+  .final-card p{
+    font-size: 1rem;
+    line-height: 1.55;
+    margin: 8px 0;
+    color: var(--ink-soft);
+  }
+  .final-card p.highlight{
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .final-card hr{
+    border: none;
+    border-top: 2px dashed var(--lavender);
+    margin: 18px 0;
+  }
+  .replay-btn{
+    margin-top: 22px;
+    font-size: 1.15rem;
+    padding: 16px 42px;
+    background: linear-gradient(135deg, var(--pink-deep), var(--lavender-deep));
+  }
+
+  /* ---- Confetti / floating hearts on final screen ---- */
+  .confetti-layer{
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .confetti-piece{
+    position: absolute;
+    top: -10%;
+    font-size: 1.4rem;
+    animation-name: confettiFall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  @keyframes confettiFall{
+    0%   { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(115vh) rotate(360deg); }
+  }
+
+  /* ============================================================
+     4) RESPONSIVE TWEAKS
+     ============================================================ */
+  @media (max-width: 480px){
+    .question{ font-size: 1.15rem; }
+    .btn{ font-size: 0.95rem; padding: 13px 22px; }
+    .card{ padding: 32px 20px 28px; }
+    .buttons-row{ gap: 12px; }
+  }
+
+  /* Respect users who prefer less motion */
+  @media (prefers-reduced-motion: reduce){
+    body{ animation: none; }
+    .bg-decor span{ animation: none; opacity: 0.3; }
+    .card, .final-card{ animation: none; }
+    .confetti-piece{ animation: none; display: none; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Decorative floating hearts/stars, purely visual -->
+  <div class="bg-decor" id="bgDecor"></div>
+
+  <main class="app">
+
+    <!-- ============== QUIZ SCREEN ============== -->
+    <section id="quizScreen" class="screen">
+      <div class="top-bar">
+        <span class="progress" id="progress">Question 1 / 10</span>
+        <button class="reset-btn" id="resetBtn" type="button">Reset 🔄</button>
+      </div>
+
+      <div class="card" id="card">
+        <p class="question" id="questionText"></p>
+        <div class="buttons-row" id="buttonsRow">
+          <button class="btn yes-btn" id="yesBtn" type="button">YES 💕</button>
+          <button class="btn no-btn" id="noBtn" type="button">NO 😌</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== FINAL SCREEN ============== -->
+    <section id="finalScreen" class="screen hidden">
+      <div class="confetti-layer" id="confettiLayer"></div>
+      <div class="final-card">
+        <h1>Congratulations, Shlok! 🎉</h1>
+        <p>You survived the most important interrogation of your life.</p>
+        <p class="highlight">Best-friend status: permanently renewed 💕</p>
+        <hr>
+        <p>Hmm… interesting answers, Shlok 👀</p>
+        <p>I'll pretend I didn't notice how many YESes you clicked.</p>
+        <p class="highlight">Anyway, you're stuck with me now. No returns accepted. 😌</p>
+        <button class="btn replay-btn" id="replayBtn" type="button">Replay 🔄</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast for NO-button reactions -->
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+<script>
+/* ================================================================
+   ALL EDITABLE CONTENT LIVES IN THESE ARRAYS — tweak freely.
+   ================================================================ */
+
+// The 10 quiz questions (mix of teasing + friendship + funny, on purpose)
+const questions = [
+  "Be honest… am I a little bit your favourite? 👀",
+  "Would you miss me if I stopped annoying you for a week?",
+  "Do you think I'm kinda cute? 🤨",
+  "If I called you at 2 AM, would you answer?",
+  "Do you agree that I'm always right? 👀",
+  "Would you save me the last piece of your favourite food?",
+  "Have you ever smiled because of one of my texts? 👀",
+  "Are you secretly glad you became friends with me?",
+  "Do you think we're suspiciously attached for 'just friends'? 👀",
+  "Okay Shlok… am I your favourite girl bestie? 💅"
+];
+
+// Shown briefly whenever YES is clicked
+const yesReactions = [
+  "That's what I wanted to hear 😌💕",
+  "Good choice, Shlok.",
+  "I knew it 👀",
+  "Correct answer. Obviously.",
+  "Okayyy, points for you 💅",
+  "See? That wasn't so difficult."
+];
+
+// Cycled through every time NO is attempted (it never actually works)
+const noMessages = [
+  "Excuse me?? 😭",
+  "Wrong answer, Shlok 👀",
+  "Nice try.",
+  "You really thought I'd let you click NO? 💀",
+  "The NO button has left the chat.",
+  "Shlok. Be serious. 😭",
+  "Hmm… I don't think that's the answer I was looking for 👀",
+  "Okay fine, chase it then 🏃‍♂️💨",
+  "Why are you fighting the inevitable? 😌",
+  "At this point, just click YES."
+];
+
+/* ================================================================
+   STATE
+   ================================================================ */
+let currentQuestion = 0;   // index into `questions`
+let noMessageIndex = 0;    // cycles through `noMessages`
+
+/* ================================================================
+   ELEMENT REFERENCES
+   ================================================================ */
+const quizScreen   = document.getElementById('quizScreen');
+const finalScreen   = document.getElementById('finalScreen');
+const progressEl    = document.getElementById('progress');
+const questionText  = document.getElementById('questionText');
+const yesBtn        = document.getElementById('yesBtn');
+const noBtn         = document.getElementById('noBtn');
+const resetBtn       = document.getElementById('resetBtn');
+const replayBtn      = document.getElementById('replayBtn');
+const toast          = document.getElementById('toast');
+const confettiLayer  = document.getElementById('confettiLayer');
+const bgDecor        = document.getElementById('bgDecor');
+
+let toastTimer = null;
+
+/* ================================================================
+   RENDER THE CURRENT QUESTION
+   ================================================================ */
+function renderQuestion(){
+  questionText.textContent = questions[currentQuestion];
+  progressEl.textContent = `Question ${currentQuestion + 1} / ${questions.length}`;
+
+  // Put the NO button back in its normal spot next to YES
+  noBtn.classList.remove('escaped');
+  noBtn.style.top = '';
+  noBtn.style.left = '';
+}
+
+/* ================================================================
+   TOAST HELPER — shows a short message, then fades out
+   ================================================================ */
+function showToast(message){
+  toast.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 1400);
+}
+
+/* ================================================================
+   THE CHAOTIC NO BUTTON
+   Moves to a random safe position inside the viewport, every time
+   the user tries to press it. Works for mouse AND touch because we
+   listen on 'pointerdown', which fires for both input types.
+   ================================================================ */
+function escapeNoButton(){
+  // Make sure it's measured in its escaped (fixed) state
+  noBtn.classList.add('escaped');
+
+  const margin = 12; // keep some breathing room from the screen edge
+  const btnWidth  = noBtn.offsetWidth  || 110;
+  const btnHeight = noBtn.offsetHeight || 50;
+
+  const maxX = Math.max(margin, window.innerWidth  - btnWidth  - margin);
+  const maxY = Math.max(margin, window.innerHeight - btnHeight - margin);
+
+  const yesRect = yesBtn.getBoundingClientRect();
+
+  let chosenX = margin;
+  let chosenY = margin;
+
+  // Try a handful of random spots, skip any that overlap the YES button
+  for (let attempt = 0; attempt < 12; attempt++){
+    const x = margin + Math.random() * (maxX - margin);
+    const y = margin + Math.random() * (maxY - margin);
+
+    const overlapsYes =
+      x < yesRect.right  + 24 &&
+      x + btnWidth  > yesRect.left  - 24 &&
+      y < yesRect.bottom + 24 &&
+      y + btnHeight > yesRect.top   - 24;
+
+    if (!overlapsYes){
+      chosenX = x;
+      chosenY = y;
+      break;
+    }
+    // last attempt: just accept whatever we've got, clamped to screen
+    chosenX = x;
+    chosenY = y;
+  }
+
+  noBtn.style.left = `${chosenX}px`;
+  noBtn.style.top  = `${chosenY}px`;
+}
+
+function handleNoAttempt(e){
+  e.preventDefault();
+  escapeNoButton();
+  showToast(noMessages[noMessageIndex]);
+  noMessageIndex = (noMessageIndex + 1) % noMessages.length;
+}
+
+// Fires for mouse click AND touch tap
+noBtn.addEventListener('pointerdown', handleNoAttempt);
+// Extra chaos on desktop: it also dodges a hovering mouse before you even press
+noBtn.addEventListener('mouseenter', (e) => {
+  if (e.pointerType === 'touch') return;
+  escapeNoButton();
+});
+// Keyboard users tabbing to the button and pressing Enter/Space also get dodged
+noBtn.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' '){
+    handleNoAttempt(e);
+  }
+});
+// If the window resizes (e.g. phone rotation) while escaped, keep it on-screen
+window.addEventListener('resize', () => {
+  if (noBtn.classList.contains('escaped')){
+    escapeNoButton();
+  }
+});
+
+/* ================================================================
+   YES BUTTON
+   ================================================================ */
+yesBtn.addEventListener('click', () => {
+  const reaction = yesReactions[Math.floor(Math.random() * yesReactions.length)];
+  showToast(reaction);
+
+  currentQuestion++;
+
+  if (currentQuestion >= questions.length){
+    showFinalScreen();
+  } else {
+    renderQuestion();
+  }
+});
+
+/* ================================================================
+   RESET BUTTON — asks for confirmation, no page reload
+   ================================================================ */
+resetBtn.addEventListener('click', () => {
+  const confirmed = window.confirm("Already giving up? 😭 Start over?");
+  if (confirmed){
+    currentQuestion = 0;
+    noMessageIndex = 0;
+    toast.classList.remove('show');
+    renderQuestion();
+  }
+  // If cancelled, do nothing — stay on the current question
+});
+
+/* ================================================================
+   FINAL SCREEN
+   ================================================================ */
+function showFinalScreen(){
+  quizScreen.classList.add('hidden');
+  finalScreen.classList.remove('hidden');
+  toast.classList.remove('show');
+  spawnConfetti();
+}
+
+replayBtn.addEventListener('click', () => {
+  confettiLayer.innerHTML = ''; // clear old confetti
+  currentQuestion = 0;
+  noMessageIndex = 0;
+  finalScreen.classList.add('hidden');
+  quizScreen.classList.remove('hidden');
+  renderQuestion();
+});
+
+/* ================================================================
+   CONFETTI — a light sprinkle of hearts & stars for the final screen
+   ================================================================ */
+function spawnConfetti(){
+  const symbols = ['💕', '✨', '🎉', '⭐', '💖'];
+  const pieceCount = 26;
+
+  for (let i = 0; i < pieceCount; i++){
+    const piece = document.createElement('span');
+    piece.className = 'confetti-piece';
+    piece.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    piece.style.left = `${Math.random() * 100}vw`;
+    piece.style.animationDuration = `${4 + Math.random() * 3}s`;
+    piece.style.animationDelay = `${Math.random() * 4}s`;
+    piece.style.fontSize = `${1 + Math.random() * 1.2}rem`;
+    confettiLayer.appendChild(piece);
+  }
+}
+
+/* ================================================================
+   BACKGROUND DECORATION — a few gentle floating hearts/stars
+   ================================================================ */
+function spawnBackgroundDecor(){
+  const symbols = ['💗', '⭐', '✨', '🩷'];
+  const count = 14;
+
+  for (let i = 0; i < count; i++){
+    const el = document.createElement('span');
+    el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    el.style.left = `${Math.random() * 100}vw`;
+    el.style.fontSize = `${1 + Math.random() * 1.4}rem`;
+    el.style.animationDuration = `${10 + Math.random() * 10}s`;
+    el.style.animationDelay = `${Math.random() * 10}s`;
+    bgDecor.appendChild(el);
+  }
+}
+
+/* ================================================================
+   INIT
+   ================================================================ */
+spawnBackgroundDecor();
+renderQuestion();
+</script>
+</body>
+</html>
